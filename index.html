@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArenaPulse AI - FIFA World Cup 2026 Stadium Operations & Fan Hub</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Ambient Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header Section -->
+  <header class="app-header">
+    <div class="header-logo">
+      <div class="soccer-icon-wrapper">
+        <svg class="soccer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 2v4M12 18v4M2 12h4M18 12h4" />
+          <path d="M7.5 7.5l2.5 2.5M14 10l2.5-2.5M7.5 16.5l2.5-2.5M14 14l2.5 2.5" />
+          <polygon points="12,10 9,12 10,15 14,15 15,12" fill="currentColor" fill-opacity="0.2"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">ArenaPulse <span class="accent-text">AI</span></span>
+        <span class="logo-subtitle">FIFA World Cup 2026™ • Dallas Host Venue</span>
+      </div>
+      <div class="live-tag">
+        <span class="live-dot"></span>
+        <span>LIVE OPERATIONS</span>
+      </div>
+    </div>
+
+    <!-- Mode Selector Navigation -->
+    <div class="mode-selector">
+      <button id="btn-fan" class="mode-btn active" onclick="switchMode('fan')">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span>Fan Companion Portal</span>
+      </button>
+      <button id="btn-ops" class="mode-btn" onclick="switchMode('ops')">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          <line x1="9" y1="3" x2="9" y2="21" />
+          <line x1="15" y1="3" x2="15" y2="21" />
+          <line x1="3" y1="9" x2="21" y2="9" />
+          <line x1="3" y1="15" x2="21" y2="15" />
+        </svg>
+        <span>Operations Command Center</span>
+      </button>
+    </div>
+
+    <!-- Matchday Metadata -->
+    <div class="match-meta">
+      <div class="meta-item">
+        <span class="meta-label">MATCHDAY</span>
+        <span class="meta-val">Match 14 • Group Stage</span>
+      </div>
+      <div class="meta-item divider"></div>
+      <div class="meta-item">
+        <span class="meta-label">DALLAS ARENA</span>
+        <span class="meta-val highlight-gold">USA vs GERMANY</span>
+      </div>
+      <div class="meta-item divider"></div>
+      <div class="meta-item">
+        <span class="meta-label">MATCH STATUS</span>
+        <span class="meta-val match-clock">18:00 kickoff (T-11m)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- ==================== FAN COMPANION VIEW ==================== -->
+    <div id="fan-view" class="view-panel active">
+      <div class="fan-grid">
+        
+        <!-- Left Side: Fan Info & AI Concierge -->
+        <div class="fan-left-column" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <!-- Hero Visual Card -->
+          <div class="glass-card hero-image-card">
+            <img src="fifa_fans_cheering.png" alt="FIFA Fans Cheering" class="hero-live-img">
+            <div class="image-overlay-content">
+              <span class="live-badge-green">LIVE ATMOSPHERE</span>
+              <h4>Dallas Host City Fan Zone</h4>
+              <p>Gates are open. Match kickoff USA vs Germany in 11 minutes.</p>
+            </div>
+          </div>
+
+          <!-- AI Concierge Chat Card -->
+          <section class="glass-card chat-section" style="flex: 1;">
+            <div class="card-header border-bottom">
+              <div class="header-icon-title">
+                <div class="glow-icon cyan">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>Multilingual AI Concierge</h3>
+                  <p class="subtitle">Ask in any language about navigation, schedules, food, transit, & sustainability.</p>
+                </div>
+              </div>
+              <!-- Language Dropdown -->
+              <div class="lang-selector">
+                <select id="chat-lang" onchange="changeLang()">
+                  <option value="en">🇺🇸 English</option>
+                  <option value="es">🇪🇸 Español</option>
+                  <option value="fr">🇫🇷 Français</option>
+                  <option value="de">🇩🇪 Deutsch</option>
+                  <option value="pt">🇵🇹 Português</option>
+                  <option value="ar">🇸🇦 العربية</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Suggested Chips -->
+            <div class="chat-chips-container">
+              <span class="chips-label">Quick Prompts:</span>
+              <div class="chips-scroll">
+                <button class="chip" onclick="sendQuickPrompt('accessible-route')">♿ Stroller/Wheelchair Path</button>
+                <button class="chip" onclick="sendQuickPrompt('sustainability-cups')">🌱 Eco Cup Refill Points</button>
+                <button class="chip" onclick="sendQuickPrompt('transit-downtown')">🚌 Shuttles to Downtown</button>
+                <button class="chip" onclick="sendQuickPrompt('vegan-halal')">🌭 Halal & Vegan Food</button>
+              </div>
+            </div>
+
+            <!-- Chat Window -->
+            <div id="chat-messages" class="chat-messages-area">
+              <!-- Messages populated by JS -->
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-bar">
+              <input type="text" id="chat-input" placeholder="Ask about gate queues, restrooms, water refilling..." onkeypress="handleChatKey(event)">
+              <button class="send-btn" onclick="sendChatMessage()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Side: Wayfinder Map and details -->
+        <section class="glass-card map-section">
+          <div class="card-header">
+            <div class="header-icon-title">
+              <div class="glow-icon gold">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="3 6 9 3 15 6 21 3 21 18 15 15 9 18 3 15" />
+                  <line x1="9" y1="3" x2="9" y2="18" />
+                  <line x1="15" y1="6" x2="15" y2="21" />
+                </svg>
+              </div>
+              <div>
+                <h3>Dynamic Arena Wayfinder</h3>
+                <p class="subtitle">Interactive stadium map layer. Click components to query live details.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Layer Selectors -->
+          <div class="map-layers">
+            <button id="layer-all" class="layer-tab active" onclick="setMapLayer('all')">Standard Map</button>
+            <button id="layer-accessibility" class="layer-tab" onclick="setMapLayer('accessibility')">♿ Accessibility Lanes</button>
+            <button id="layer-sustainability" class="layer-tab" onclick="setMapLayer('sustainability')">🌱 Eco Hubs</button>
+            <button id="layer-crowd" class="layer-tab" onclick="setMapLayer('crowd')">🔥 Live Crowd Heatmap</button>
+          </div>
+
+          <!-- The Map Visualizer -->
+          <div class="map-wrapper">
+            <!-- SVG Stadium Map -->
+            <svg id="stadium-map" viewBox="0 0 600 450" class="stadium-svg">
+              <defs>
+                <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="var(--accent-glow)" stop-opacity="0.15" />
+                  <stop offset="100%" stop-color="var(--accent-glow)" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Outer Boundary representing stadium perimeter -->
+              <rect x="5" y="5" width="590" height="440" rx="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2"/>
+
+              <!-- Outer Stadium Ring Glow -->
+              <ellipse cx="300" cy="225" rx="260" ry="180" fill="url(#glow)"/>
+
+              <!-- Outer Concourses -->
+              <ellipse cx="300" cy="225" rx="250" ry="170" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="8" stroke-dasharray="10 5"/>
+              <ellipse cx="300" cy="225" rx="210" ry="140" fill="none" stroke="rgba(255, 255, 255, 0.07)" stroke-width="4"/>
+
+              <!-- Seating Bowl Outer -->
+              <ellipse id="seating-bowl" cx="300" cy="225" rx="180" ry="115" fill="rgba(15, 23, 42, 0.6)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2"/>
+              <!-- Pitch (Green Field) -->
+              <rect x="230" y="175" width="140" height="100" rx="4" fill="rgba(16, 185, 129, 0.12)" stroke="rgba(16, 185, 129, 0.4)" stroke-width="2"/>
+              <line x1="300" y1="175" x2="300" y2="275" stroke="rgba(16, 185, 129, 0.3)" stroke-width="2"/>
+              <circle cx="300" cy="225" r="20" fill="none" stroke="rgba(16, 185, 129, 0.3)" stroke-width="2"/>
+
+              <!-- Seating Sections (Interactive Sectors) -->
+              <path id="section-101" class="map-region section-region" d="M 200 130 A 130 90 0 0 1 400 130 L 380 150 A 110 75 0 0 0 220 150 Z" onclick="clickMapObject('Section 101 (North Stand)', '82% Full • Fan Zone Access', 'Wait times at food stands here are 8 mins. Directly connected to Gate A.')" />
+              <path id="section-102" class="map-region section-region" d="M 400 130 A 130 90 0 0 1 430 320 L 400 290 A 110 75 0 0 0 380 150 Z" onclick="clickMapObject('Section 102 (East Stand)', '45% Full • Standard Seating', 'Direct route to Gate B. Near the plant-based concession and accessibility ramp.')" />
+              <path id="section-103" class="map-region section-region" d="M 430 320 A 130 90 0 0 1 170 320 L 200 290 A 110 75 0 0 0 400 290 Z" onclick="clickMapObject('Section 103 (South Stand)', '91% Full • Active Fan Club', 'Heavy density. Exit through Gate C. Accessible bathrooms are directly behind row 15.')" />
+              <path id="section-104" class="map-region section-region" d="M 170 320 A 130 90 0 0 1 200 130 L 220 150 A 110 75 0 0 0 200 290 Z" onclick="clickMapObject('Section 104 (West Stand)', '60% Full • Premium & Media', 'Quiet area, stroller parking behind Sec 104-B. Quick access to transit links through Gate D.')" />
+
+              <!-- Gates (Interactive Rectangles) -->
+              <!-- Gate A (North) -->
+              <g class="map-gate" onclick="clickMapObject('Gate A - North Gate', 'Security Queue: Normal (4 min)', 'Equipped with 10 biometric scanners. Features accessible step-free access lanes.')">
+                <rect id="gate-a-rect" class="map-region gate-region" x="280" y="30" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5"/>
+                <text x="300" y="41" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE A</text>
+              </g>
+              <!-- Gate B (East) -->
+              <g class="map-gate" onclick="clickMapObject('Gate B - East Gate', 'Security Queue: Light (2 min)', 'Recommended entry point for shuttle arrivals. Multi-channel ticket scanning active.')">
+                <rect id="gate-b-rect" class="map-region gate-region" x="510" y="217" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5" transform="rotate(90, 530, 225)"/>
+                <text x="530" y="228" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE B</text>
+              </g>
+              <!-- Gate C (South) -->
+              <g class="map-gate" onclick="clickMapObject('Gate C - South Gate', 'Security Queue: Congested (14 min)', 'CROWD WARNING: Heavy ingress due to supporter bus arrivals. Consider diverting to Gate D or B.')">
+                <rect id="gate-c-rect" class="map-region gate-region" x="280" y="405" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--color-warn)" stroke-width="1.5"/>
+                <text x="300" y="416" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE C</text>
+              </g>
+              <!-- Gate D (West) -->
+              <g class="map-gate" onclick="clickMapObject('Gate D - West Gate', 'Security Queue: Light (3 min)', 'Direct connection to light rail. Best accessibility facilities and fast-track entry.')">
+                <rect id="gate-d-rect" class="map-region gate-region" x="50" y="217" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5" transform="rotate(90, 70, 225)"/>
+                <text x="70" y="228" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE D</text>
+              </g>
+
+              <!-- Accessibility Overlay (Ramps, elevators, stroller parkings) -->
+              <g id="map-accessibility-layer" class="map-overlay-layer hidden">
+                <!-- Ramps -->
+                <path d="M 80 232 L 130 200 L 200 200" fill="none" stroke="var(--cyan-glow)" stroke-width="3" stroke-dasharray="6 3" class="path-glow animate-dash"/>
+                <path d="M 520 232 L 470 260 L 400 260" fill="none" stroke="var(--cyan-glow)" stroke-width="3" stroke-dasharray="6 3" class="path-glow animate-dash"/>
+                <!-- Icons (represented by distinct SVG points) -->
+                <!-- Stroller Parkings -->
+                <circle cx="190" cy="180" r="10" fill="rgba(0, 242, 254, 0.2)" stroke="var(--cyan-glow)" stroke-width="1.5" onclick="clickMapObject('Stroller Parking Section 104', 'Secure & Staffed', 'Free stroller drop-off and tagging. Pick up anytime after final whistle.')"/>
+                <text x="190" y="183" text-anchor="middle" fill="var(--cyan-glow)" font-size="9" font-family="Outfit" pointer-events="none" font-weight="bold">♿</text>
+
+                <circle cx="410" cy="270" r="10" fill="rgba(0, 242, 254, 0.2)" stroke="var(--cyan-glow)" stroke-width="1.5" onclick="clickMapObject('Accessible Elevators East', 'Operational • Priority Access', 'Connects lower concourse to executive boxes and upper seating tiers.')"/>
+                <text x="410" y="273" text-anchor="middle" fill="var(--cyan-glow)" font-size="9" font-family="Outfit" pointer-events="none" font-weight="bold">⇅</text>
+              </g>
+
+              <!-- Sustainability Overlay (Refill stations, recycling hubs) -->
+              <g id="map-sustainability-layer" class="map-overlay-layer hidden">
+                <!-- Eco Refill Stations -->
+                <circle cx="250" cy="110" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Water Refilling Station North', 'Eco-Hub • Active', 'Bring your reusable water bottle. Chilled filtered water. Total waste diverted today: 1,420 bottles.')"/>
+                <circle cx="350" cy="340" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Water Refilling Station South', 'Eco-Hub • Active', 'Featuring interactive carbon tracker. Total waste diverted today: 2,110 bottles.')"/>
+                <!-- Recycling Hubs -->
+                <circle cx="160" cy="250" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Compost & Recycling Station West', 'Compost & Recycle • Active', 'Sensors indicate 45% full. Ensure food leftovers go to the compost bin to feed local community gardens.')"/>
+                <circle cx="440" cy="200" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Sorting Station East', 'Zero-Waste Hub', 'Acceptable items: Aluminum cans, paper cartons, and compostable cups. Volunteers present to assist.')"/>
+              </g>
+
+              <!-- Crowd Density Heatmap (Colored circles displaying wait or traffic alerts) -->
+              <g id="map-crowd-layer" class="map-overlay-layer hidden">
+                <!-- Gate A (Normal - Green) -->
+                <circle cx="300" cy="37" r="25" fill="rgba(16, 185, 129, 0.35)" class="pulse-glow"/>
+                <!-- Gate B (Light - Green) -->
+                <circle cx="530" cy="225" r="25" fill="rgba(16, 185, 129, 0.35)" class="pulse-glow"/>
+                <!-- Gate C (Heavy - Red) -->
+                <circle cx="300" cy="412" r="30" fill="rgba(239, 68, 68, 0.5)" class="pulse-glow-warn"/>
+                <!-- Gate D (Normal - Green) -->
+                <circle cx="70" cy="225" r="25" fill="rgba(16, 185, 129, 0.35)" class="pulse-glow"/>
+
+                <!-- Concourse Congestion Section 103 -->
+                <ellipse cx="300" cy="305" rx="70" ry="20" fill="rgba(245, 158, 11, 0.4)"/>
+              </g>
+
+              <!-- Path Draw Overlay (Dynamically drawn path) -->
+              <path id="wayfinder-path" d="" fill="none" stroke="var(--color-gold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 5" class="path-glow animate-dash hidden"/>
+              
+              <!-- User Position Marker -->
+              <circle cx="100" cy="250" r="6" fill="#00F2FE" stroke="#FFF" stroke-width="1.5" class="user-position-pulse"/>
+              <text x="100" y="240" fill="#00F2FE" font-size="8" font-family="Space Grotesk" text-anchor="middle" font-weight="bold">YOU ARE HERE</text>
+            </svg>
+          </div>
+
+          <!-- Selected Location Details Panel -->
+          <div id="location-details" class="location-details-box">
+            <span class="label-info">MAP SELECTION</span>
+            <h4 id="loc-name">Select an element on the map</h4>
+            <p id="loc-status" class="loc-status-text">Click Seating Sections, Gates, Eco Hubs, or Accessibility Icons to view details.</p>
+            <p id="loc-desc" class="loc-desc-text"></p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ==================== OPERATIONS COMMAND VIEW ==================== -->
+    <div id="ops-view" class="view-panel">
+      <div class="ops-grid">
+        
+        <!-- Left: Incident Log Console -->
+        <section class="glass-card ops-column incident-list-card">
+          <div class="card-header border-bottom">
+            <div class="header-icon-title">
+              <div class="glow-icon red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Incident Dispatch Deck</h3>
+                <p class="subtitle">Live stadium incidents. Select an incident to run GenAI Decision Support.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Incidents Feed Container -->
+          <div id="incident-feed" class="incident-feed-area">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </section>
+
+        <!-- Middle: GenAI Operational Coordinator (Decision Support) -->
+        <section class="glass-card ops-column coordinator-card">
+          <div class="card-header border-bottom">
+            <div class="header-icon-title">
+              <div class="glow-icon gold animate-pulse">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+              </div>
+              <div>
+                <h3>GenAI Operations Coordinator</h3>
+                <p class="subtitle">Real-time incident response plans, multilingual PA logs, and volunteer routing.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resolution Workspace -->
+          <div id="resolver-workspace" class="resolver-workspace-area">
+            <div class="empty-state-resolver">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="empty-icon">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+              <h4>No Active Incident Selected</h4>
+              <p>Choose an incident from the Dispatch Deck on the left to begin generating real-time AI solutions.</p>
+            </div>
+            
+            <!-- Dynamic Incident Details and Resolver (hidden by default) -->
+            <div id="resolver-active" class="resolver-active-content hidden">
+              <div class="selected-incident-details">
+                <div class="details-top">
+                  <span id="selected-inc-badge" class="badge">CRITICAL</span>
+                  <span id="selected-inc-time" class="time-elapsed">T-3m ago</span>
+                </div>
+                <h4 id="selected-inc-title">Gate C Congestion - Bus Queue Collision</h4>
+                <p id="selected-inc-desc" class="desc">A backup of 500+ fans at Gate C due to the simultaneous arrival of 8 supporter shuttles. Security checks experiencing bottlenecks.</p>
+              </div>
+
+              <!-- Action trigger button -->
+              <button id="btn-generate-ai" class="ai-button" onclick="generateAIResolution()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sparkle-icon">
+                  <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+                </svg>
+                <span>Generate GenAI Action Plan</span>
+              </button>
+
+              <!-- Progress bar loader -->
+              <div id="ai-loader" class="ai-loader-bar hidden">
+                <div class="loader-progress"></div>
+                <span class="loader-text">AI is analyzing cameras, local transit models, and volunteer schedules...</span>
+              </div>
+
+              <!-- AI Output Blocks (animated reveal) -->
+              <div id="ai-output" class="ai-output-blocks hidden">
+                <!-- Action Plan Card -->
+                <div class="ai-block-card">
+                  <div class="card-tag cyan">💡 Operational Action Plan</div>
+                  <div id="ai-plan-content" class="ai-markdown-block">
+                    <!-- Streamed in by JS -->
+                  </div>
+                </div>
+
+                <!-- Broadcast Announcement Card -->
+                <div class="ai-block-card">
+                  <div class="card-tag gold">🗣️ Multilingual Broadcast Logs (PA)</div>
+                  <div id="ai-broadcast-content" class="ai-markdown-block">
+                    <!-- Streamed in by JS -->
+                  </div>
+                </div>
+
+                <!-- Volunteer Instructions Card -->
+                <div class="ai-block-card">
+                  <div class="card-tag green">📱 Volunteer SMS/Pager Dispatch</div>
+                  <div id="ai-sms-content" class="ai-markdown-block">
+                    <!-- Streamed in by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right: Diagnostic Metrics & Analytics -->
+        <section class="glass-card ops-column diagnostics-card">
+          <div class="card-header border-bottom">
+            <div class="header-icon-title">
+              <div class="glow-icon cyan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Arena Diagnostics</h3>
+                <p class="subtitle">Live key indicators for operations, transit, & sustainability compliance.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="diagnostics-content">
+            
+            <!-- Live CCTV Feed Monitor -->
+            <div class="glass-card cctv-monitor-card" style="flex-shrink: 0;">
+              <div class="cctv-header">
+                <span class="live-dot-green"></span>
+                <span class="cctv-title">CCTV MAIN FEED • SEC 103</span>
+              </div>
+              <div class="cctv-screen">
+                <img src="fifa_stadium_crowd.png" alt="Live CCTV Stadium Feed" class="cctv-live-img">
+                <div class="cctv-overlay-text">CAM-103_SEATING_BOWL • 1080P • 30FPS</div>
+              </div>
+            </div>
+
+            <!-- Ingress/Crowd Meter -->
+            <div class="metric-container">
+              <div class="metric-header">
+                <span>Ingress Flow Density</span>
+                <span id="txt-ingress">74% Capacity</span>
+              </div>
+              <div class="progress-bar">
+                <div id="meter-ingress" class="progress-fill fill-cyan" style="width: 74%"></div>
+              </div>
+              <p class="metric-sub">Average gate queue: 5.8m. Total checked: 63,410 / 80,000.</p>
+            </div>
+
+            <!-- Transit Shuttle ETA -->
+            <div class="metric-container">
+              <div class="metric-header">
+                <span>Transit Efficiency Tracker</span>
+                <span id="txt-transit">Interval: 3.5m</span>
+              </div>
+              <div class="progress-bar">
+                <div id="meter-transit" class="progress-fill fill-gold" style="width: 88%"></div>
+              </div>
+              <p class="metric-sub">Downtown express shuttles: 42 active. Rail capacity: Normal.</p>
+            </div>
+
+            <!-- Sustainability Index -->
+            <div class="metric-container">
+              <div class="metric-header">
+                <span>Waste Diversion & Sustainability</span>
+                <span id="txt-waste">82% Diverted</span>
+              </div>
+              <div class="progress-bar">
+                <div id="meter-waste" class="progress-fill fill-green" style="width: 82%"></div>
+              </div>
+              <p class="metric-sub">Compost & recyclable cups sorted. Water saved: 42,300 liters.</p>
+            </div>
+
+            <!-- Concessions Green Stock -->
+            <div class="metric-container">
+              <div class="metric-header">
+                <span>Eco Cup Stock Remaining</span>
+                <span id="txt-cups">91,240 units (94%)</span>
+              </div>
+              <div class="progress-bar">
+                <div id="meter-cups" class="progress-fill fill-green" style="width: 94%"></div>
+              </div>
+              <p class="metric-sub">Biodegradable cups in stock. Non-eco plastics: 0% in use.</p>
+            </div>
+
+            <!-- Active Volunteers -->
+            <div class="metric-container">
+              <div class="metric-header">
+                <span>Active Volunteers & Staff</span>
+                <span id="txt-staff">420/450 Deployed</span>
+              </div>
+              <div class="progress-bar">
+                <div id="meter-staff" class="progress-fill fill-cyan" style="width: 93%"></div>
+              </div>
+              <p class="metric-sub">Standby crew: 30. Medical units: 10/10 operational.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Live Dynamic Ticker -->
+  <footer class="app-ticker">
+    <div class="ticker-label">
+      <span class="pulse-alert-dot"></span>
+      <span>DALLAS FEED</span>
+    </div>
+    <div class="ticker-content">
+      <div id="ticker-text" class="ticker-scroll-text">
+        📢 Welcome to Dallas Arena! Security gates are normal except Gate C (South). • 🌱 Save water and earn 50 Eco-Points at any water refill station using your ticket app! • 🚌 Shuttle buses to Union Station are departing every 3-5 minutes from Gate B. • ⚽ USA vs GERMANY kicks off in 11 minutes. Section 102 & 103 paths are fully open.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Javascript -->
+  <script src="app.js"></script>
+</body>
+</html>

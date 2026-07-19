@@ -1,0 +1,13 @@
+{
+  "name": "fifa-world-cup-2026-arenapulse",
+  "version": "1.0.0",
+  "description": "GenAI-enabled Stadium Operations and Fan Experience Hub for FIFA World Cup 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "dotenv": "^16.4.5"
+  }
+}
