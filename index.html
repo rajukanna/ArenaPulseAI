@@ -211,30 +211,30 @@
               <circle cx="300" cy="225" r="20" fill="none" stroke="rgba(16, 185, 129, 0.3)" stroke-width="2"/>
 
               <!-- Seating Sections (Interactive Sectors) -->
-              <path id="section-101" class="map-region section-region" d="M 200 130 A 130 90 0 0 1 400 130 L 380 150 A 110 75 0 0 0 220 150 Z" onclick="clickMapObject('Section 101 (North Stand)', '82% Full • Fan Zone Access', 'Wait times at food stands here are 8 mins. Directly connected to Gate A.')" />
-              <path id="section-102" class="map-region section-region" d="M 400 130 A 130 90 0 0 1 430 320 L 400 290 A 110 75 0 0 0 380 150 Z" onclick="clickMapObject('Section 102 (East Stand)', '45% Full • Standard Seating', 'Direct route to Gate B. Near the plant-based concession and accessibility ramp.')" />
-              <path id="section-103" class="map-region section-region" d="M 430 320 A 130 90 0 0 1 170 320 L 200 290 A 110 75 0 0 0 400 290 Z" onclick="clickMapObject('Section 103 (South Stand)', '91% Full • Active Fan Club', 'Heavy density. Exit through Gate C. Accessible bathrooms are directly behind row 15.')" />
-              <path id="section-104" class="map-region section-region" d="M 170 320 A 130 90 0 0 1 200 130 L 220 150 A 110 75 0 0 0 200 290 Z" onclick="clickMapObject('Section 104 (West Stand)', '60% Full • Premium & Media', 'Quiet area, stroller parking behind Sec 104-B. Quick access to transit links through Gate D.')" />
+              <path id="section-101" class="map-region section-region" role="button" tabindex="0" aria-label="Stadium Section 101" d="M 200 130 A 130 90 0 0 1 400 130 L 380 150 A 110 75 0 0 0 220 150 Z" onclick="clickMapObject('Section 101 (North Stand)', '82% Full • Fan Zone Access', 'Wait times at food stands here are 8 mins. Directly connected to Gate A.')" />
+              <path id="section-102" class="map-region section-region" role="button" tabindex="0" aria-label="Stadium Section 102" d="M 400 130 A 130 90 0 0 1 430 320 L 400 290 A 110 75 0 0 0 380 150 Z" onclick="clickMapObject('Section 102 (East Stand)', '45% Full • Standard Seating', 'Direct route to Gate B. Near the plant-based concession and accessibility ramp.')" />
+              <path id="section-103" class="map-region section-region" role="button" tabindex="0" aria-label="Stadium Section 103" d="M 430 320 A 130 90 0 0 1 170 320 L 200 290 A 110 75 0 0 0 400 290 Z" onclick="clickMapObject('Section 103 (South Stand)', '91% Full • Active Fan Club', 'Heavy density. Exit through Gate C. Accessible bathrooms are directly behind row 15.')" />
+              <path id="section-104" class="map-region section-region" role="button" tabindex="0" aria-label="Stadium Section 104" d="M 170 320 A 130 90 0 0 1 200 130 L 220 150 A 110 75 0 0 0 200 290 Z" onclick="clickMapObject('Section 104 (West Stand)', '60% Full • Premium & Media', 'Quiet area, stroller parking behind Sec 104-B. Quick access to transit links through Gate D.')" />
 
               <!-- Gates (Interactive Rectangles) -->
               <!-- Gate A (North) -->
               <g class="map-gate" onclick="clickMapObject('Gate A - North Gate', 'Security Queue: Normal (4 min)', 'Equipped with 10 biometric scanners. Features accessible step-free access lanes.')">
-                <rect id="gate-a-rect" class="map-region gate-region" x="280" y="30" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5"/>
+                <rect id="gate-a-rect" class="map-region gate-region" role="button" tabindex="0" aria-label="Gate A North Entrance" x="280" y="30" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5"/>
                 <text x="300" y="41" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE A</text>
               </g>
               <!-- Gate B (East) -->
               <g class="map-gate" onclick="clickMapObject('Gate B - East Gate', 'Security Queue: Light (2 min)', 'Recommended entry point for shuttle arrivals. Multi-channel ticket scanning active.')">
-                <rect id="gate-b-rect" class="map-region gate-region" x="510" y="217" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5" transform="rotate(90, 530, 225)"/>
+                <rect id="gate-b-rect" class="map-region gate-region" role="button" tabindex="0" aria-label="Gate B East Entrance" x="510" y="217" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5" transform="rotate(90, 530, 225)"/>
                 <text x="530" y="228" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE B</text>
               </g>
               <!-- Gate C (South) -->
               <g class="map-gate" onclick="clickMapObject('Gate C - South Gate', 'Security Queue: Congested (14 min)', 'CROWD WARNING: Heavy ingress due to supporter bus arrivals. Consider diverting to Gate D or B.')">
-                <rect id="gate-c-rect" class="map-region gate-region" x="280" y="405" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--color-warn)" stroke-width="1.5"/>
+                <rect id="gate-c-rect" class="map-region gate-region" role="button" tabindex="0" aria-label="Gate C South Entrance" x="280" y="405" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--color-warn)" stroke-width="1.5"/>
                 <text x="300" y="416" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE C</text>
               </g>
               <!-- Gate D (West) -->
               <g class="map-gate" onclick="clickMapObject('Gate D - West Gate', 'Security Queue: Light (3 min)', 'Direct connection to light rail. Best accessibility facilities and fast-track entry.')">
-                <rect id="gate-d-rect" class="map-region gate-region" x="50" y="217" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5" transform="rotate(90, 70, 225)"/>
+                <rect id="gate-d-rect" class="map-region gate-region" role="button" tabindex="0" aria-label="Gate D West Entrance" x="50" y="217" width="40" height="15" rx="3" fill="var(--color-bg-card)" stroke="var(--cyan-glow)" stroke-width="1.5" transform="rotate(90, 70, 225)"/>
                 <text x="70" y="228" text-anchor="middle" fill="#FFF" font-size="8" font-family="Space Grotesk" pointer-events="none">GATE D</text>
               </g>
 
@@ -245,21 +245,21 @@
                 <path d="M 520 232 L 470 260 L 400 260" fill="none" stroke="var(--cyan-glow)" stroke-width="3" stroke-dasharray="6 3" class="path-glow animate-dash"/>
                 <!-- Icons (represented by distinct SVG points) -->
                 <!-- Stroller Parkings -->
-                <circle cx="190" cy="180" r="10" fill="rgba(0, 242, 254, 0.2)" stroke="var(--cyan-glow)" stroke-width="1.5" onclick="clickMapObject('Stroller Parking Section 104', 'Secure & Staffed', 'Free stroller drop-off and tagging. Pick up anytime after final whistle.')"/>
-                <text x="190" y="183" text-anchor="middle" fill="var(--cyan-glow)" font-size="9" font-family="Outfit" pointer-events="none" font-weight="bold">♿</text>
+                <circle cx="190" cy="180" r="10" fill="rgba(0, 242, 254, 0.2)" stroke="var(--cyan-glow)" stroke-width="1.5" role="button" tabindex="0" aria-label="Stroller Parking Section 104" onclick="clickMapObject('Stroller Parking Section 104', 'Secure & Staffed', 'Free stroller drop-off and tagging. Pick up anytime after final whistle.')"/>
+                <text x="190" y="183" text-anchor="middle" fill="var(--cyan-glow)" font-size="9" font-family="Outfit" pointer-events="none" font-weight="bold" aria-hidden="true">♿</text>
 
-                <circle cx="410" cy="270" r="10" fill="rgba(0, 242, 254, 0.2)" stroke="var(--cyan-glow)" stroke-width="1.5" onclick="clickMapObject('Accessible Elevators East', 'Operational • Priority Access', 'Connects lower concourse to executive boxes and upper seating tiers.')"/>
-                <text x="410" y="273" text-anchor="middle" fill="var(--cyan-glow)" font-size="9" font-family="Outfit" pointer-events="none" font-weight="bold">⇅</text>
+                <circle cx="410" cy="270" r="10" fill="rgba(0, 242, 254, 0.2)" stroke="var(--cyan-glow)" stroke-width="1.5" role="button" tabindex="0" aria-label="Accessible Elevators East" onclick="clickMapObject('Accessible Elevators East', 'Operational • Priority Access', 'Connects lower concourse to executive boxes and upper seating tiers.')"/>
+                <text x="410" y="273" text-anchor="middle" fill="var(--cyan-glow)" font-size="9" font-family="Outfit" pointer-events="none" font-weight="bold" aria-hidden="true">⇅</text>
               </g>
 
               <!-- Sustainability Overlay (Refill stations, recycling hubs) -->
               <g id="map-sustainability-layer" class="map-overlay-layer hidden">
                 <!-- Eco Refill Stations -->
-                <circle cx="250" cy="110" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Water Refilling Station North', 'Eco-Hub • Active', 'Bring your reusable water bottle. Chilled filtered water. Total waste diverted today: 1,420 bottles.')"/>
-                <circle cx="350" cy="340" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Water Refilling Station South', 'Eco-Hub • Active', 'Featuring interactive carbon tracker. Total waste diverted today: 2,110 bottles.')"/>
+                <circle cx="250" cy="110" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" role="button" tabindex="0" aria-label="Water Refilling Station North" onclick="clickMapObject('Water Refilling Station North', 'Eco-Hub • Active', 'Bring your reusable water bottle. Chilled filtered water. Total waste diverted today: 1,420 bottles.')"/>
+                <circle cx="350" cy="340" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" role="button" tabindex="0" aria-label="Water Refilling Station South" onclick="clickMapObject('Water Refilling Station South', 'Eco-Hub • Active', 'Featuring interactive carbon tracker. Total waste diverted today: 2,110 bottles.')"/>
                 <!-- Recycling Hubs -->
-                <circle cx="160" cy="250" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Compost & Recycling Station West', 'Compost & Recycle • Active', 'Sensors indicate 45% full. Ensure food leftovers go to the compost bin to feed local community gardens.')"/>
-                <circle cx="440" cy="200" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" onclick="clickMapObject('Sorting Station East', 'Zero-Waste Hub', 'Acceptable items: Aluminum cans, paper cartons, and compostable cups. Volunteers present to assist.')"/>
+                <circle cx="160" cy="250" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" role="button" tabindex="0" aria-label="Compost & Recycling Station West" onclick="clickMapObject('Compost & Recycling Station West', 'Compost & Recycle • Active', 'Sensors indicate 45% full. Ensure food leftovers go to the compost bin to feed local community gardens.')"/>
+                <circle cx="440" cy="200" r="8" fill="rgba(16, 185, 129, 0.2)" stroke="var(--color-success)" stroke-width="1.5" role="button" tabindex="0" aria-label="Sorting Station East" onclick="clickMapObject('Sorting Station East', 'Zero-Waste Hub', 'Acceptable items: Aluminum cans, paper cartons, and compostable cups. Volunteers present to assist.')"/>
               </g>
 
               <!-- Crowd Density Heatmap (Colored circles displaying wait or traffic alerts) -->
@@ -520,6 +520,7 @@
   </footer>
 
   <!-- Javascript -->
+  <script src="constants.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

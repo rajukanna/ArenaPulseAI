@@ -1,3 +1,5 @@
+"use strict";
+
 const assert = require('assert');
 const app = require('./server');
 
@@ -82,6 +84,28 @@ try {
   runRouteHandler('/api/chat', 'post', mockReq, mockRes);
 } catch (e) {
   console.error("❌ Test 3 Failed:", e.message);
+  process.exit(1);
+}
+
+// --- Test 3.5: Input Request Script Injection Validation (Security) ---
+try {
+  const mockReq = { body: { message: "Hello <script>alert(1)</script>", lang: "en" } }; // Script payload
+  const mockRes = {
+    statusCode: 200,
+    status: function(code) {
+      this.statusCode = code;
+      return this;
+    },
+    json: function(data) {
+      assert.strictEqual(this.statusCode, 400, "Should return 400 Bad Request status code for script tag.");
+      assert.strictEqual(data.status, "error", "Response status should indicate error.");
+      assert.ok(data.message.includes("Invalid request payload"), "Error message should report payload validation failure.");
+      console.log("✅ Test 3.5 Passed: Server successfully blocks potential XSS script tag injections (Security).");
+    }
+  };
+  runRouteHandler('/api/chat', 'post', mockReq, mockRes);
+} catch (e) {
+  console.error("❌ Test 3.5 Failed:", e.message);
   process.exit(1);
 }
 
@@ -180,7 +204,7 @@ function runTest5(originalKey) {
           process.env.GEMINI_API_KEY = originalKey;
 
           console.log("=======================================================");
-          console.log("🎉 All 5 tests passed successfully!");
+          console.log("🎉 All 6 tests passed successfully!");
           console.log("=======================================================");
           process.exit(0);
         } catch (e) {

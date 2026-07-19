@@ -1,3 +1,5 @@
+"use strict";
+
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
@@ -6,6 +8,12 @@ const PORT = process.env.PORT || 3000;
 
 // Import modular prompt templates and offline databases
 const { CONCIERGE_SYSTEM_PROMPT, INCIDENT_SYSTEM_PROMPT } = require('./dataStore');
+
+const logger = {
+  info: (...msg) => console.log('[INFO] [Server]', ...msg),
+  warn: (...msg) => console.warn('[WARN] [Server]', ...msg),
+  error: (...msg) => console.error('[ERROR] [Server]', ...msg)
+};
 
 app.use(express.json());
 
@@ -69,12 +77,20 @@ async function callGemini(systemPrompt, userPrompt) {
 
 /**
  * Security: Validates string format, type, and size to mitigate DoS and XSS payloads.
+ * Reject HTML tags or script injection vectors outright.
  * @param {any} param - Variable to check.
  * @param {number} maxLen - Maximum allowed length.
  * @returns {boolean} True if input is valid.
  */
 function isValidString(param, maxLen) {
-  return typeof param === 'string' && param.trim().length > 0 && param.length <= maxLen;
+  if (typeof param !== 'string' || param.trim().length === 0 || param.length > maxLen) {
+    return false;
+  }
+  const lower = param.toLowerCase();
+  if (lower.includes("<script") || lower.includes("javascript:") || lower.includes("onload=") || lower.includes("onerror=")) {
+    return false;
+  }
+  return true;
 }
 
 // Chat API using Gemini
@@ -99,7 +115,7 @@ app.post('/api/chat', async (req, res) => {
       response: reply
     });
   } catch (error) {
-    console.error("Gemini Chat Error:", error.message);
+    logger.error("Gemini Chat Error:", error.message);
     res.json({
       status: 'error',
       message: error.message
@@ -153,7 +169,7 @@ app.post('/api/resolve-incident', async (req, res) => {
       sms
     });
   } catch (error) {
-    console.error("Gemini Resolution Error:", error.message);
+    logger.error("Gemini Resolution Error:", error.message);
     res.json({
       status: 'error',
       message: error.message
@@ -163,10 +179,10 @@ app.post('/api/resolve-incident', async (req, res) => {
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`=======================================================`);
-    console.log(`🏟️  ArenaPulse AI Hub - FIFA World Cup 2026`);
-    console.log(`🚀 Server is running at: http://localhost:${PORT}`);
-    console.log(`=======================================================`);
+    logger.info(`=======================================================`);
+    logger.info(`🏟️  ArenaPulse AI Hub - FIFA World Cup 2026`);
+    logger.info(`🚀 Server is running at: http://localhost:${PORT}`);
+    logger.info(`=======================================================`);
   });
 }
 
