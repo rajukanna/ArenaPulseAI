@@ -97,6 +97,10 @@ TRANSLATIONS.pt = TRANSLATIONS.en;
 TRANSLATIONS.ar = TRANSLATIONS.en;
 
 // ==================== SWITCH VIEWS LOGIC ====================
+/**
+ * Switch dashboard mode between Fan view and Operations Command view.
+ * @param {string} mode - Mode key ('fan' or 'ops').
+ */
 function switchMode(mode) {
   state.currentMode = mode;
   
@@ -111,11 +115,20 @@ function switchMode(mode) {
     opsView.classList.remove('active');
     btnFan.classList.add('active');
     btnOps.classList.remove('active');
+    
+    // Accessibility adjustments
+    btnFan.setAttribute('aria-selected', 'true');
+    btnOps.setAttribute('aria-selected', 'false');
   } else {
     fanView.classList.remove('active');
     opsView.classList.add('active');
     btnFan.classList.remove('active');
     btnOps.classList.add('active');
+    
+    // Accessibility adjustments
+    btnFan.setAttribute('aria-selected', 'false');
+    btnOps.setAttribute('aria-selected', 'true');
+    
     renderIncidents(); // Render operational incidents when showing ops view
   }
 }
@@ -124,33 +137,58 @@ function switchMode(mode) {
 const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 
-// Initialize chat with welcome message
+// Local client-side cache to minimize network overhead and latency
+const chatCache = new Map();
+
+/**
+ * Initializes the chat concierge interface with a welcome message.
+ */
 function initChat() {
   chatMessages.innerHTML = '';
   addBotMessage(TRANSLATIONS[state.currentLang].welcome);
 }
 
+/**
+ * Handles language switching triggers.
+ */
 function changeLang() {
   const langSelect = document.getElementById('chat-lang');
   state.currentLang = langSelect.value;
   initChat();
 }
 
+/**
+ * Binds Enter keypress event to the chat input field.
+ */
 function handleChatKey(event) {
   if (event.key === 'Enter') {
     sendChatMessage();
   }
 }
 
+/**
+ * Dispatches the fan chat message and updates the UI log dynamically.
+ */
 function sendChatMessage() {
   const query = chatInput.value.trim();
   if (!query) return;
   
-  // Add user message
+  // Render user bubble
   addUserMessage(query);
   chatInput.value = '';
   
-  // Show AI thinking state
+  const cacheKey = `${state.currentLang}_${query.toLowerCase()}`;
+  
+  // 1. Efficiency: Serve immediately from local cache if queried before
+  if (chatCache.has(cacheKey)) {
+    showBotTypingIndicator();
+    setTimeout(() => {
+      removeBotTypingIndicator();
+      addBotMessage(chatCache.get(cacheKey));
+    }, 300);
+    return;
+  }
+  
   showBotTypingIndicator();
   
   // Fetch real Gemini chat completion from local server
@@ -163,6 +201,8 @@ function sendChatMessage() {
   .then(data => {
     removeBotTypingIndicator();
     if (data.status === 'success') {
+      // Cache the response locally
+      chatCache.set(cacheKey, data.response);
       addBotMessage(data.response);
     } else {
       console.warn("Gemini API fallback: utilizing local concierge lookup.");
@@ -177,6 +217,7 @@ function sendChatMessage() {
     addBotMessage(response);
   });
 }
+
 
 function sendQuickPrompt(type) {
   let promptText = '';
@@ -308,9 +349,34 @@ function scrollToBottom(element) {
   element.scrollTop = element.scrollHeight;
 }
 
+/**
+ * Escapes characters to prevent Cross-Site Scripting (XSS) attacks.
+ * @param {string} str - Raw input string.
+ * @returns {string} Safe, sanitized string.
+ */
+function escapeHTML(str) {
+  return str.replace(/[&<>'"]/g, 
+    tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+  );
+}
+
+/**
+ * Safely compiles basic bold and line-break markdowns after escaping tag inputs.
+ * @param {string} text - Raw content.
+ * @returns {string} Sanitized formatted HTML string.
+ */
 function formatMarkdown(text) {
-  // Simple regex replacements for presentation
-  return text
+  // 1. Security: Escape raw input to neutralize XSS payloads
+  const escaped = escapeHTML(text);
+  
+  // 2. Formatting: Re-introduce permitted stylistic elements
+  return escaped
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br/>')
     .replace(/- (.*?)(<br\/>|$)/g, '• $1$2');

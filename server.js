@@ -14,15 +14,13 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Gemini API Integration Details
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
-
 // Helper function to call the Gemini API REST endpoint
 async function callGemini(systemPrompt, userPrompt) {
-  if (!GEMINI_API_KEY) {
+  const activeKey = process.env.GEMINI_API_KEY || "";
+  if (!activeKey) {
     throw new Error("GEMINI_API_KEY is not configured in environment variables.");
   }
-  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${activeKey}`;
   const payload = {
     contents: [
       {
@@ -152,11 +150,13 @@ Ensure you output the markers '===PLAN===', '===BROADCAST===', and '===SMS===' e
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`=======================================================`);
-  console.log(`🏟️  ArenaPulse AI Hub - FIFA World Cup 2026`);
-  console.log(`🚀 Server is running at: http://localhost:${PORT}`);
-  console.log(`=======================================================`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`=======================================================`);
+    console.log(`🏟️  ArenaPulse AI Hub - FIFA World Cup 2026`);
+    console.log(`🚀 Server is running at: http://localhost:${PORT}`);
+    console.log(`=======================================================`);
+  });
+}
 
 module.exports = app;
