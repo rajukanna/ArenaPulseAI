@@ -3,7 +3,16 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "index.html",
+          "style.css",
+          "app.js",
+          "fifa_fans_cheering.png",
+          "fifa_stadium_crowd.png"
+        ]
+      }
     }
   ],
   "routes": [
