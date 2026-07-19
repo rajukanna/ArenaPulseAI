@@ -35,42 +35,8 @@ ArenaPulse AI operates in two distinct, responsive views:
 
 ## 📊 System Architecture & Flows
 
-### 1. Unified System Architecture
-The diagram below shows the connections between client views, backend endpoints, and the Gemini API model:
 
-```mermaid
-flowchart TD
-    subgraph Client [Frontend UI - Browser]
-        FanUI[Fan Companion Portal]
-        OpsUI[Operations Command Center]
-    end
-
-    subgraph Server [Backend - Express.js]
-        Express[server.js File Server]
-        ChatRoute[/api/chat]
-        ResolveRoute[/api/resolve-incident]
-    end
-
-    subgraph GenAI [Google Gemini API]
-        Gemini[gemini-3.5-flash]
-    end
-
-    FanUI -->|User prompt| ChatRoute
-    OpsUI -->|Incident details| ResolveRoute
-
-    ChatRoute -->|System instructions & Prompt| Gemini
-    ResolveRoute -->|Mitigation details| Gemini
-
-    Gemini -->|Concierge Response| ChatRoute
-    Gemini -->|Action Plan, PA & SMS logs| ResolveRoute
-
-    ChatRoute -->|Stream response| FanUI
-    ResolveRoute -->|Stream resolution sections| OpsUI
-```
-
----
-
-### 2. Fan Concierge & Map Interaction Flow
+### 1. Fan Concierge & Map Interaction Flow
 Below is the sequence diagram illustrating how a fan's pathfinding request highlights the interactive map:
 
 ```mermaid
@@ -92,7 +58,7 @@ sequenceDiagram
 
 ---
 
-### 3. Operational Incident Mitigation Flow
+### 2. Operational Incident Mitigation Flow
 Below is the sequence diagram showing how command staff resolves a live gate congestion warning:
 
 ```mermaid
