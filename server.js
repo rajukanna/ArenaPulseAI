@@ -22,7 +22,7 @@ async function callGemini(systemPrompt, userPrompt) {
   if (!GEMINI_API_KEY) {
     throw new Error("GEMINI_API_KEY is not configured in environment variables.");
   }
-  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${GEMINI_API_KEY}`;
   const payload = {
     contents: [
       {
