@@ -138,16 +138,16 @@
               </div>
             </div>
 
-            <!-- Chat Window -->
-            <div id="chat-messages" class="chat-messages-area">
+            <!-- Chat Window (Accessibility polite live updates) -->
+            <div id="chat-messages" class="chat-messages-area" role="log" aria-live="polite" aria-label="Chat messages log">
               <!-- Messages populated by JS -->
             </div>
 
             <!-- Chat Input -->
             <div class="chat-input-bar">
-              <input type="text" id="chat-input" placeholder="Ask about gate queues, restrooms, water refilling..." onkeypress="handleChatKey(event)">
-              <button class="send-btn" onclick="sendChatMessage()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <input type="text" id="chat-input" placeholder="Ask about gate queues, restrooms, water refilling..." onkeypress="handleChatKey(event)" aria-label="Type your message here">
+              <button class="send-btn" onclick="sendChatMessage()" aria-label="Send message">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <line x1="22" y1="2" x2="11" y2="13" />
                   <polygon points="22 2 15 22 11 13 2 9 22 2" />
                 </svg>
@@ -175,11 +175,11 @@
           </div>
 
           <!-- Layer Selectors -->
-          <div class="map-layers">
-            <button id="layer-all" class="layer-tab active" onclick="setMapLayer('all')">Standard Map</button>
-            <button id="layer-accessibility" class="layer-tab" onclick="setMapLayer('accessibility')">♿ Accessibility Lanes</button>
-            <button id="layer-sustainability" class="layer-tab" onclick="setMapLayer('sustainability')">🌱 Eco Hubs</button>
-            <button id="layer-crowd" class="layer-tab" onclick="setMapLayer('crowd')">🔥 Live Crowd Heatmap</button>
+          <div class="map-layers" role="tablist" aria-label="Stadium Map Layers">
+            <button id="layer-all" class="layer-tab active" role="tab" aria-selected="true" onclick="setMapLayer('all')" aria-label="Show standard map layer">Standard Map</button>
+            <button id="layer-accessibility" class="layer-tab" role="tab" aria-selected="false" onclick="setMapLayer('accessibility')" aria-label="Show stroller and wheelchair lanes">♿ Accessibility Lanes</button>
+            <button id="layer-sustainability" class="layer-tab" role="tab" aria-selected="false" onclick="setMapLayer('sustainability')" aria-label="Show green eco water and waste hubs">🌱 Eco Hubs</button>
+            <button id="layer-crowd" class="layer-tab" role="tab" aria-selected="false" onclick="setMapLayer('crowd')" aria-label="Show live crowd density heatmap">🔥 Live Crowd Heatmap</button>
           </div>
 
           <!-- The Map Visualizer -->
@@ -319,8 +319,8 @@
             </div>
           </div>
 
-          <!-- Incidents Feed Container -->
-          <div id="incident-feed" class="incident-feed-area">
+          <!-- Incidents Feed Container (Accessibility assertive logs) -->
+          <div id="incident-feed" class="incident-feed-area" role="log" aria-live="assertive" aria-label="Live stadium incident dispatch queue">
             <!-- Populated dynamically by JS -->
           </div>
         </section>
@@ -379,7 +379,7 @@
               </div>
 
               <!-- AI Output Blocks (animated reveal) -->
-              <div id="ai-output" class="ai-output-blocks hidden">
+              <div id="ai-output" class="ai-output-blocks hidden" role="region" aria-live="polite" aria-label="AI Operations Coordinator Resolution Plan">
                 <!-- Action Plan Card -->
                 <div class="ai-block-card">
                   <div class="card-tag cyan">💡 Operational Action Plan</div>

@@ -390,8 +390,10 @@ function setMapLayer(layer) {
     const tabEl = document.getElementById(`layer-${t}`);
     if (t === layer) {
       tabEl.classList.add('active');
+      tabEl.setAttribute('aria-selected', 'true');
     } else {
       tabEl.classList.remove('active');
+      tabEl.setAttribute('aria-selected', 'false');
     }
   });
 

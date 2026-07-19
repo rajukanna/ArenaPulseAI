@@ -4,6 +4,9 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Import modular prompt templates and offline databases
+const { CONCIERGE_SYSTEM_PROMPT, INCIDENT_SYSTEM_PROMPT } = require('./dataStore');
+
 app.use(express.json());
 
 // Serve static files from the root of the project
@@ -64,20 +67,33 @@ async function callGemini(systemPrompt, userPrompt) {
   throw new Error("Invalid response format from Gemini API");
 }
 
+/**
+ * Security: Validates string format, type, and size to mitigate DoS and XSS payloads.
+ * @param {any} param - Variable to check.
+ * @param {number} maxLen - Maximum allowed length.
+ * @returns {boolean} True if input is valid.
+ */
+function isValidString(param, maxLen) {
+  return typeof param === 'string' && param.trim().length > 0 && param.length <= maxLen;
+}
+
 // Chat API using Gemini
 app.post('/api/chat', async (req, res) => {
   const { message, lang } = req.body;
-  try {
-    const systemPrompt = `You are ArenaPulse AI Concierge, a helpful stadium guide for the FIFA World Cup 2026 at Dallas Arena.
-Assist fans with stadium navigation, concessions (including Halal, vegan, eco-friendly stands), transportation (buses at Gate B, rail at Gate D), accessibility (stroller parking behind Sec 104-B, wheelchair ramps), and sustainability (recycling hubs, chilled water stations behind Sec 101 and 103).
-Respond concisely in the language the user speaks. Use friendly emojis.
-Keep formatting clean and readable. Use basic bolding and lists.
-If asked about stroller/wheelchair paths, mention Gate D or Section 104 ramp, and stroller parking behind Sec 104-B.
-If asked about sustainability/water, mention eco-cups, recycling bins, and water refilling at Sec 101/103.
-If asked about transit, mention Gate B for downtown shuttles (every 3 mins) and Gate D for light rail (every 6 mins).
-Current user language selection is: ${lang || 'en'}.`;
+  
+  // Security input validation boundary
+  if (!isValidString(message, 500) || (lang !== undefined && !isValidString(lang, 10))) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Invalid request payload: message must be a non-empty string under 500 characters.'
+    });
+  }
 
-    const reply = await callGemini(systemPrompt, message);
+  try {
+    // Append language-specific user constraints dynamically
+    const dynamicPrompt = `${CONCIERGE_SYSTEM_PROMPT}\nActive User Language Constraint: ${lang || 'en'}.`;
+    const reply = await callGemini(dynamicPrompt, message);
+    
     res.json({
       status: 'success',
       response: reply
@@ -94,24 +110,20 @@ Current user language selection is: ${lang || 'en'}.`;
 // Operations Incident Resolver API using Gemini
 app.post('/api/resolve-incident', async (req, res) => {
   const { title, summary, location } = req.body;
+
+  // Security input validation boundary
+  if (!isValidString(title, 500) || !isValidString(summary, 500) || !isValidString(location, 500)) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Invalid request payload: parameters must be non-empty strings under 500 characters.'
+    });
+  }
+
   try {
-    const systemPrompt = `You are ArenaPulse Incident Coordinator, a real-time stadium operations support AI for the FIFA World Cup 2026.
-You will be provided with a stadium incident description.
-Generate a response containing three distinct sections separated by markers exactly as shown below:
-===PLAN===
-[Detailed, actionable step-by-step mitigation plan for stadium staff and security, tailored specifically to the incident.]
-===BROADCAST===
-[Public announcement scripts in English, Spanish, and French to keep fans updated or redirect them safely.]
-===SMS===
-[Short pager/SMS message for dispatching volunteers to the scene.]
-
-Ensure you output the markers '===PLAN===', '===BROADCAST===', and '===SMS===' exactly. Do not add any other major section titles.`;
-
     const userPrompt = `Incident Title: ${title}\nLocation: ${location}\nDetails: ${summary}`;
+    const rawResult = await callGemini(INCIDENT_SYSTEM_PROMPT, userPrompt);
     
-    const rawResult = await callGemini(systemPrompt, userPrompt);
-    
-    // Parse the output
+    // Parse structured tags
     let plan = "";
     let broadcast = "";
     let sms = "";
@@ -130,7 +142,6 @@ Ensure you output the markers '===PLAN===', '===BROADCAST===', and '===SMS===' e
       sms = rawResult.substring(smsIndex + 9).trim();
     }
 
-    // Fallback if parsing failed or text formats are incomplete
     if (!plan || !broadcast || !sms) {
       throw new Error("Unable to parse structured response sections from Gemini API output.");
     }
