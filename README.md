@@ -1,71 +1,77 @@
-# ArenaPulse AI Hub - FIFA World Cup 2026™
+# 🏟️ ArenaPulse AI - FIFA World Cup 2026™
 
-ArenaPulse AI is a premium, GenAI-enabled stadium operations and fan experience portal designed for the FIFA World Cup 2026. The solution leverages the Google Gemini API to optimize navigation, crowd management, accessibility, transportation, sustainability, and real-time decision support.
-
----
-
-## 🌟 Key Features
-
-### 1. Fan Companion Portal
-- **Multilingual AI Concierge**: Chatbot powered by live Gemini API (`gemini-1.5-flash`) that guides fans on seating navigation, stroller-accessible lanes, and halal/vegan dining.
-- **Dynamic Wayfinder Map**: Interactive SVG stadium layout overlaying accessibility routes, zero-waste eco-hubs, and live crowd density heatmaps.
-- **Dallas Matchday Alert Ticker**: Dynamic alert marquee ticker delivering real-time transit and security broadcasts.
-
-### 2. Operations Command Center (Staff View)
-- **CCTV Live Monitor**: Simulated live camera feeds (CAM-103 Seating Bowl) demonstrating operational telemetry.
-- **Incident Dispatch Console**: A real-time incident queue tracking pending alerts (such as gate congestion, waste overflows, or equipment failures).
-- **GenAI Decision Support**: Operations coordinator that analyzes incidents using Gemini to generate:
-  - **Action Plan**: Actionable steps for venue staff.
-  - **PA Broadcast logs**: Multi-lingual announcements (English, Spanish, French).
-  - **SMS/Pager Dispatch**: Instant routing instruction logs for ground volunteers.
-- **Arena Diagnostics Dashboard**: Live telemetry meters tracking ingress completion rates, transit efficiency, and sustainability recycling rates.
+An advanced, GenAI-powered stadium operations command dashboard and fan experience portal designed for the **FIFA World Cup 2026** Dallas host venue. The platform optimizes crowd flow, transit waiting times, wayfinding navigation, accessibility routing, and sustainability tracking in real time.
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## 🚀 Core Features
 
-This flowchart illustrates how data moves through the ArenaPulse AI server to query Gemini and update both the fan and staff interfaces:
+ArenaPulse AI operates in two distinct, responsive views:
+
+### 📱 Fan Companion Portal
+* **Multilingual AI Concierge**: Powered by Google Gemini 3.5, answering fan inquiries on transit schedules, food preferences (vegan, halal), and accessibility pathways.
+* **Smart Wayfinder Map**: Interactive SVG stadium map detailing seating sectors, recycling hubs, and accessibility lanes with dynamic route path highlighting.
+* **Live Ingress Alert Ticker**: Dynamic broadcast marquee ticker for safety announcements and stadium news.
+
+### ⚙️ Operations Command Center
+* **CCTV Live Monitor**: Real-time visual stadium seat view telemetry showing fan ingress density.
+* **Incident Dispatch Console**: Active queue log tracking active stadium reports (e.g., gate bottlenecks, waste bin capacity).
+* **GenAI Operational Resolver**: Instant AI-generated mitigation strategies, multi-lingual PA scripts, and volunteer pager logs.
+* **Arena Diagnostics**: Visual analytics meters tracking ingress percentage, shuttle transit ETAs, and eco-recycling metrics.
+
+---
+
+## 🛠️ Technology Stack
+
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Frontend** | Core HTML5 & Vanilla JavaScript | UI structure and responsive logic |
+| **Styling** | Vanilla CSS3 (Bright Glassmorphism) | Premium styling, layouts, and animations |
+| **Backend** | Node.js & Express.js | API routing and web resource server |
+| **AI Integration** | Google Gemini API (`gemini-3.5-flash`) | Generates real-time chatbot replies and incident resolution plans |
+| **Environment** | Dotenv | Manages secure API keys locally |
+
+---
+
+## 📊 System Architecture & Flows
+
+### 1. Unified System Architecture
+The diagram below shows the connections between client views, backend endpoints, and the Gemini API model:
 
 ```mermaid
 flowchart TD
-    %% User Interfaces
-    subgraph Client [Frontend UI - browser]
+    subgraph Client [Frontend UI - Browser]
         FanUI[Fan Companion Portal]
         OpsUI[Operations Command Center]
     end
 
-    %% Web Server
     subgraph Server [Backend - Express.js]
         Express[server.js File Server]
         ChatRoute[/api/chat]
         ResolveRoute[/api/resolve-incident]
     end
 
-    %% GenAI
     subgraph GenAI [Google Gemini API]
-        Gemini[gemini-1.5-flash]
+        Gemini[gemini-3.5-flash]
     end
 
-    %% Connections
     FanUI -->|User prompt| ChatRoute
     OpsUI -->|Incident details| ResolveRoute
 
     ChatRoute -->|System instructions & Prompt| Gemini
-    ResolveRoute -->|Mitigation instructions & details| Gemini
+    ResolveRoute -->|Mitigation details| Gemini
 
     Gemini -->|Concierge Response| ChatRoute
     Gemini -->|Action Plan, PA & SMS logs| ResolveRoute
 
-    ChatRoute -->|Stream back response| FanUI
+    ChatRoute -->|Stream response| FanUI
     ResolveRoute -->|Stream resolution sections| OpsUI
 ```
 
 ---
 
-## 🔄 User & Operations Flows
-
-### Fan Navigation & Wayfinder Flow
-The sequence diagram below displays the steps when a fan requests stroller-accessible parking:
+### 2. Fan Concierge & Map Interaction Flow
+Below is the sequence diagram illustrating how a fan's pathfinding request highlights the interactive map:
 
 ```mermaid
 sequenceDiagram
@@ -84,8 +90,10 @@ sequenceDiagram
     UI->>Fan: Streams response and shows highlighted map path
 ```
 
-### Operational Incident Resolution Flow
-The sequence diagram below displays the steps when stadium command handles a gate congestion warning:
+---
+
+### 3. Operational Incident Mitigation Flow
+Below is the sequence diagram showing how command staff resolves a live gate congestion warning:
 
 ```mermaid
 sequenceDiagram
@@ -108,7 +116,27 @@ sequenceDiagram
 
 ---
 
-## 🚀 Getting Started
+## 📁 Directory Structure
+
+```text
+Ch4/
+├── node_modules/          # Installed dependencies (Express, Dotenv)
+├── .env                   # Local credentials (ignored by git)
+├── .gitignore             # Configured ignore patterns
+├── app.js                 # Frontend orchestration and interactive script
+├── fifa_fans_cheering.png # Live fan atmosphere banner
+├── fifa_stadium_crowd.png # Live CCTV seating bowl display image
+├── index.html             # Dashboard structure template
+├── LICENSE                # Project license details
+├── package.json           # Project manifest and package configurations
+├── README.md              # Project documentation
+├── server.js              # Express backend server with Gemini API routes
+└── style.css              # Premium light-mode glassmorphic theme stylesheet
+```
+
+---
+
+## ⚙️ Setup & Installation
 
 ### 📋 Prerequisites
 - **Node.js** (v18.0.0 or higher)
@@ -116,12 +144,24 @@ sequenceDiagram
 
 ### 💻 Installation
 1. Clone or download this project folder.
-2. Open your terminal in the directory and run:
+2. Open a terminal inside the project directory and run:
    ```bash
    npm install
    ```
 
-### ⚡ Running the Platform
+### 🔑 API Environment Configurations
+
+> [!IMPORTANT]
+> To use the live Gemini API integration, you must configure your API key locally.
+
+1. In the root directory, create a file named `.env` (this file is ignored by Git):
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   PORT=3000
+   ```
+2. Save the file. If no API key is specified, the application will automatically run in offline mode using pre-seeded local databases.
+
+### ⚡ Running the Dashboard
 1. Start the Express server:
    ```bash
    npm start
